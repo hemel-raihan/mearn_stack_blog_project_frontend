@@ -14,9 +14,9 @@ export default function Post({img}) {
       <div className="postInfo">
         <div className="postCats">
           <span className="postCat">
-            {/* <Link className="link" to="/posts?cat=Music"> */}
+            <Link className="link" to="/posts?cat=Music">
               Music
-            {/* </Link> */}
+            </Link>
           </span>
           <span className="postCat">
             {/* <Link className="link" to="/posts?cat=Music"> */}
@@ -25,9 +25,9 @@ export default function Post({img}) {
           </span>
         </div>
         <span className="postTitle">
-          {/* <Link to="/post/abc" className="link"> */}
+          <Link to="/post/abc" className="link">
             Lorem ipsum dolor sit amet
-          {/* </Link> */}
+          </Link>
         </span>
         <hr />
         <span className="postDate">1 hour ago</span>
