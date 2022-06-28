@@ -23,7 +23,7 @@ function App() {
         <Route  path='/register' element={currentUser ? <Home /> : <Register />} />
         <Route  path='/write' element={currentUser ? <Write /> : <Register />} />
         <Route  path='/settings' element={currentUser ? <Settings /> : <Register />} />
-        <Route  path='/post/:postId' element={<SinglePost />} />
+        <Route  path='/post/:postId' element={<Single />} />
       </Routes>
      
     </Router>
