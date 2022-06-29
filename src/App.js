@@ -11,18 +11,20 @@ import Register from './pages/register/register';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //import SinglePost from './components/singlePost/SinglePost';
+import { useContext } from 'react';
+import { Context } from './context/Context';
 
 function App() {
-  const currentUser = false;
+  const {user} = useContext(Context);
   return (
     <Router>
       <TopBar />
       <Routes>
         <Route  path='/' element={<Home />} />
-        <Route  path='/login' element={currentUser ? <Home /> : <Login />} />
-        <Route  path='/register' element={currentUser ? <Home /> : <Register />} />
-        <Route  path='/write' element={currentUser ? <Write /> : <Register />} />
-        <Route  path='/settings' element={currentUser ? <Settings /> : <Register />} />
+        <Route  path='/login' element={user ? <Home /> : <Login />} />
+        <Route  path='/register' element={user ? <Home /> : <Register />} />
+        <Route  path='/write' element={user ? <Write /> : <Register />} />
+        <Route  path='/settings' element={user ? <Settings /> : <Register />} />
         <Route  path='/post/:postId' element={<Single />} />
       </Routes>
      
