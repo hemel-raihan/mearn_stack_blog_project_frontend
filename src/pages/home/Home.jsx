@@ -13,8 +13,8 @@ export default function Home() {
 console.log(search)
   useEffect(() =>{
     const fetchPosts = async () =>{
-      // const res = await axios.get('http://localhost:5000/api/posts'+search)
-      const res = await axios.get('https://node-blog-projects-api.herokuapp.com/api/posts'+search)
+      const res = await axios.get('https://shibchar.com/api/posts'+search)
+      // const res = await axios.get('https://node-blog-projects-api.herokuapp.com/api/posts'+search)
       setPosts(res.data)
     }
     fetchPosts()
