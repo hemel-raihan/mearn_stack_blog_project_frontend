@@ -17,18 +17,19 @@ export default function Write() {
     const newPost = {
       username: user.username,
       title,
+      photo: file,
       desc,
     };
-    if (file) {
-      const data =new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      newPost.photo = filename;
-      try {
-        await axios.post("https://node-blog-projects-api.herokuapp.com/api/upload", data);
-      } catch (err) {}
-    }
+    // if (file) {
+    //   const data =new FormData();
+    //   const filename = Date.now() + file.name;
+    //   data.append("name", filename);
+    //   data.append("file", file);
+    //   newPost.photo = filename;
+    //   try {
+    //     await axios.post("https://node-blog-projects-api.herokuapp.com/api/upload", data);
+    //   } catch (err) {}
+    // }
     try {
       const res = await axios.post("https://node-blog-projects-api.herokuapp.com/api/posts", newPost);
       //window.location.replace("/post/" + res.data._id);
