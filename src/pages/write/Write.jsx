@@ -15,11 +15,11 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
-      username: user.username,
-      title,
-      desc,
-    };
+    // const newPost = {
+    //   username: user.username,
+    //   title,
+    //   desc,
+    // };
     if (file) {
       const data =new FormData();
       const filename = Date.now() + file.name;
@@ -28,10 +28,6 @@ export default function Write() {
       data.append("title", title);
       data.append("username", user.username);
       data.append("desc", desc);
-      // newPost.photo = filename;
-      // newPost.username= user.username;
-      // newPost.title = title;
-      // newPost.desc = desc;
       try {
        const res = await axios.post("https://blog-projects-mern-api.herokuapp.com/api/posts", data);
         navigate("/post/" + res.data._id);

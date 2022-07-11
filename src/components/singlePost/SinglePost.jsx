@@ -10,23 +10,24 @@ export default function SinglePost() {
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const [file, setFile] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
 
   const location = useLocation()
   const path = location.pathname.split('/')[2];
   const [post, setPost] = useState({})
-  const PF = "https://node-blog-projects-api.herokuapp.com/uploads/";
+
   useEffect(() =>{
-    const getPost = async () =>{
-      const res = await axios.get('https://blog-projects-mern-api.herokuapp.com/api/posts/'+path)
-      setPost(res.data);
-      setTitle(res.data.title);
-      setDesc(res.data.desc);
-    }
+    
     getPost()
   },[path])
 
-
+  const getPost = async () =>{
+    const res = await axios.get('https://blog-projects-mern-api.herokuapp.com/api/posts/'+path)
+    setPost(res.data);
+    setTitle(res.data.title);
+    setDesc(res.data.desc);
+  }
   const handleDelete = async()=>{
     try{
       await axios.delete(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, {data: {username: user.username}})
@@ -39,29 +40,72 @@ export default function SinglePost() {
   }
 
   const handleUpdate = async()=>{
-    try{
-      await axios.put(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, {
-       username: user.username, 
-       title, 
-       desc
-      });
-      setUpdateMode(false);
+    if (file) {
+      const data =new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
+      data.append("file", file);
+      data.append("title", title);
+      data.append("username", user.username);
+      data.append("desc", desc);
+      try {
+       await axios.put(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, data);
+       //navigate("/post/" + post._id);
+       getPost()
+       setUpdateMode(false);
+      } catch (err) {}
     }
-    catch(err){
-
+    else{
+      try{
+        await axios.put(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, {
+         username: user.username, 
+         title, 
+         desc,
+         name: null
+        });
+        setUpdateMode(false);
+      }
+      catch(err){
+  
+      }
     }
   }
 
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        {post.photo && (
-          <img
-          className="singlePostImg"
-          src={post.photo}
-          alt=""
-          />
-        )}
+        {
+          updateMode &&
+            <>
+             {file && (
+                <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
+              )}
+              <label htmlFor="fileInput">
+              <i className="writeIcon fas fa-plus"></i>
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                style={{ display: "none" }}
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+            </>
+            
+        }
+        {
+        !updateMode &&
+        <>
+         {post.photo && (
+            <img
+            className="singlePostImg"
+            src={post.photo}
+            alt=""
+            />
+          )}
+        </>
+         
+        }
+        
         {
           updateMode ? <input type='text' onChange={(e)=>setTitle(e.target.value)} value={title} className='singlePostTitleInput' /> : (
          <h1 className="singlePostTitle">

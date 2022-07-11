@@ -97,3 +97,11 @@
   align-self: flex-end;
   margin-top: 20px;
 }
+
+.writeImg {
+  margin-left: 10px;
+  width: 70vw;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
