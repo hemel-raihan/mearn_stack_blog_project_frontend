@@ -18,7 +18,7 @@ export default function SinglePost() {
   const PF = "https://node-blog-projects-api.herokuapp.com/uploads/";
   useEffect(() =>{
     const getPost = async () =>{
-      const res = await axios.get('https://node-blog-projects-api.herokuapp.com/api/posts/'+path)
+      const res = await axios.get('https://blog-projects-mern-api.herokuapp.com/api/posts/'+path)
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
@@ -29,7 +29,7 @@ export default function SinglePost() {
 
   const handleDelete = async()=>{
     try{
-      await axios.delete(`https://node-blog-projects-api.herokuapp.com/api/posts/${post._id}`, {data: {username: user.username}})
+      await axios.delete(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, {data: {username: user.username}})
       navigate("/");
     }
     catch(err){
@@ -40,7 +40,7 @@ export default function SinglePost() {
 
   const handleUpdate = async()=>{
     try{
-      await axios.put(`https://node-blog-projects-api.herokuapp.com/api/posts/${post._id}`, {
+      await axios.put(`https://blog-projects-mern-api.herokuapp.com/api/posts/${post._id}`, {
        username: user.username, 
        title, 
        desc
@@ -58,7 +58,7 @@ export default function SinglePost() {
         {post.photo && (
           <img
           className="singlePostImg"
-          src={PF + post.photo}
+          src={post.photo}
           alt=""
           />
         )}
