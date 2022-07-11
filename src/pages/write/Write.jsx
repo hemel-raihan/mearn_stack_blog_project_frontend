@@ -9,32 +9,39 @@ export default function Write() {
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
   const { user } = useContext(Context);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       username: user.username,
       title,
-      photo: file,
       desc,
     };
-    // if (file) {
-    //   const data =new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append("name", filename);
-    //   data.append("file", file);
-    //   newPost.photo = filename;
-    //   try {
-    //     await axios.post("https://node-blog-projects-api.herokuapp.com/api/upload", data);
-    //   } catch (err) {}
-    // }
-    try {
-      const res = await axios.post("https://node-blog-projects-api.herokuapp.com/api/posts", newPost);
-      //window.location.replace("/post/" + res.data._id);
-      navigate("/post/" + res.data._id);
-    } catch (err) {}
+    if (file) {
+      const data =new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
+      data.append("file", file);
+      data.append("title", title);
+      data.append("username", user.username);
+      data.append("desc", desc);
+      // newPost.photo = filename;
+      // newPost.username= user.username;
+      // newPost.title = title;
+      // newPost.desc = desc;
+      try {
+       const res = await axios.post("https://blog-projects-mern-api.herokuapp.com/api/posts", data);
+        navigate("/post/" + res.data._id);
+      } catch (err) {}
+    }
+    // try {
+    //   const res =  axios.post("http://localhost:5000/api/posts", newPost);
+    //   //window.location.replace("/post/" + res.data._id);
+    //   navigate("/post/" + res.data._id);
+    // } catch (err) {}
   };
   return (
     <div className="write">
